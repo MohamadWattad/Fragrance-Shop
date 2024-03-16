@@ -1,0 +1,19 @@
+﻿/*img{
+    width:4rem;
+    height:15rem;
+    padding-top:2%;
+}*/
+.card{
+    border:hidden;
+}
+.txt{
+    font-style:oblique;
+}
+body {
+    opacity: 1;
+   /* background-image: url("https://i.pinimg.com/736x/8f/be/67/8fbe67342629d2fa3157f2b567e7f0b6.jpg");*/
+    background-blend-mode: multiply;
+}
+.navw3 {
+   border-style:hidden;
+}

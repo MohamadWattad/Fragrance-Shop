@@ -2,7 +2,7 @@
 
 namespace MvcProject99.Models
 {
-    public class HomePageModel
+    public class SignupModel
     {
 		[Required(ErrorMessage = "Must to be first name")]
 		[StringLength(20, MinimumLength = 2, ErrorMessage = "first name must be between 2 and 20 letters")]
