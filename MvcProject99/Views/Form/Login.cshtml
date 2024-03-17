@@ -1,18 +1,18 @@
 ﻿@model MvcProject99.Models.LoginModel
 <link href="~/css/signup.css" rel="stylesheet" />
 <div class="wrapper" style="text-align:center;">
-    <h2>Registration</h2>
-    <form action="" method="post">
+    <h2>Sign In</h2>
+    <form action="GetLogIn" method="post">
         <div class="input-box">
             <div> @Html.ValidationMessageFor(x => x.Email) </div>
             <input name="Email" value="@Model.Email" type="text" placeholder="Enter your email" required>
         </div>
         <div class="input-box">
             <div> @Html.ValidationMessageFor(x => x.Password) </div>
-            <input name="Password" value="@Model.Password" type="password" placeholder="Create password" required>
+            <input name="Password" value="@Model.Password" type="password" placeholder="Password" required>
         </div>
         <div class="input-box button">
-            <input type="Submit" value="Register Now">
+            <input type="Submit" value="Log In">
         </div>
         <div class="text">
             <h3>dont have an account? <a href="/Form/Signup">Signup now</a></h3>
