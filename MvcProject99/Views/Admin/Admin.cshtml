@@ -17,15 +17,15 @@
                         </div>
                         <div class="d-flex flex-column number1">
                             <span class="articles">Deleting</span>
-                            <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            <button id="show-deleting-btn" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                         </div>
                         <div class="d-flex flex-column number1">
                             <span class="articles">Warehouse</span>
-                            <button class="btn btn-warning"><i class="fa-solid fa-warehouse"></i></button>
+                            <button id="show-warehouse-btn" class="btn btn-warning"><i class="fa-solid fa-warehouse"></i></button>
                         </div>
                         <div class="d-flex flex-column number1">
                             <span class="articles">Discount</span>
-                            <button class="btn btn-dark"><i class="fa-solid fa-percent"></i></button>
+                            <button id="show-discount-btn"class="btn btn-dark"><i class="fa-solid fa-percent"></i></button>
                         </div>
                     </div>
                 </div>
@@ -38,10 +38,48 @@
         @Html.Partial("AddingForm")
     </div>
 
+    <div id="deleting" style="display: none;">
+        <!-- This is where the partial view will be loaded -->
+        @Html.Partial("DeletingForm")
+    </div>
+    <div id="warehouse" style="display: none;">
+        <!-- This is where the partial view will be loaded -->
+        @Html.Partial("Warehouse")
+    </div>
+    <div id="discount" style="display: none;">
+        <!-- This is where the partial view will be loaded -->
+        @Html.Partial("DiscountForm")
+    </div>
+
 </div>
 
 <script>
     document.getElementById("show-adding-btn").addEventListener("click", function () {
         document.getElementById("adding").style.display = "block";
+        // document.getElementById("deleting").style.display = "none"; // Hide deleting form
+        // document.getElementById("warehouse").style.display = "none"; // Hide deleting form
+        // document.getElementById("discount").style.display = "none"; // Hide deleting form
+    });
+
+    document.getElementById("show-deleting-btn").addEventListener("click", function () {
+        document.getElementById("deleting").style.display = "block";
+        // document.getElementById("adding").style.display = "none"; // Hide adding form
+        // document.getElementById("warehouse").style.display = "none"; // Hide deleting form
+        // document.getElementById("discount").style.display = "none"; // Hide deleting form
+    });
+    document.getElementById("show-warehouse-btn").addEventListener("click", function () {
+        document.getElementById("warehouse").style.display = "block";
+        // document.getElementById("adding").style.display = "none"; // Hide adding form
+        // document.getElementById("deleting").style.display = "none"; // Hide deleting form
+        // document.getElementById("discount").style.display = "none"; // Hide deleting form
+    });
+    document.getElementById("show-discount-btn").addEventListener("click", function () {
+        document.getElementById("discount").style.display = "block";
+        // document.getElementById("adding").style.display = "none"; // Hide adding form
+        // document.getElementById("deleting").style.display = "none"; // Hide deleting form
+        // document.getElementById("warehouse").style.display = "none"; // Hide deleting form
     });
 </script>
+
+
+

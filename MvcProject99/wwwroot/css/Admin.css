@@ -68,44 +68,28 @@
     color: #00BCD4
 }
 
-.form-control-label {
-    margin-bottom: 0
+
+table td,
+table th {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-input, textarea, button {
-    padding: 8px 15px;
-    border-radius: 5px !important;
-    margin: 5px 0px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    font-size: 18px !important;
-    font-weight: 300
+thead th {
+    color: #fff;
 }
 
-    input:focus, textarea:focus {
-        -moz-box-shadow: none !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        border: 1px solid #00BCD4;
-        outline-width: 0;
-        font-weight: 400
-    }
 
-.btn-block {
-    text-transform: uppercase;
-    font-size: 15px !important;
-    font-weight: 400;
-    height: 43px;
-    cursor: pointer
+
+.table-scroll {
+    border-radius: .5rem;
+}
+.table-scroll table thead th {
+    font-size: 1.25rem;
 }
 
-    .btn-block:hover {
-        color: #fff !important
-    }
-
-button:focus {
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-    outline-width: 0
+thead {
+    top: 0;
+    position: sticky;
 }
