@@ -1,1 +1,48 @@
-﻿<h1>asdad</h1>
+﻿<!DOCTYPE html>
+<link href="~/css/homepageadmin.css" rel="stylesheet" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Fragrance Shop Admin Panel</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#manage-products">Manage Products</a></li>
+            <li><a href="#manage-prices">Manage Prices</a></li>
+            <li><a href="#manage-stock">Manage Stock</a></li>
+            <li><a href="#manage-position">Manage Product Position</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="manage-products">
+            <h2>Manage Products</h2>
+            <!-- Form for adding/removing products -->
+        </section>
+        <section id="manage-prices">
+            <h2>Manage Prices</h2>
+            <!-- Form for managing prices -->
+        </section>
+        <section id="manage-stock">
+            <h2>Manage Stock</h2>
+            <button id="show-stock-btn">Show Stock</button>
+            <div id="stock-info" style="display: none;">
+                <!-- Stock information will be displayed here -->
+            </div>
+        </section>
+        <section id="manage-position">
+            <h2>Manage Product Position</h2>
+            <!-- Form for managing product positions -->
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Fragrance Shop</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

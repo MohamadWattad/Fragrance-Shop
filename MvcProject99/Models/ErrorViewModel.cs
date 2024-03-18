@@ -1,3 +1,4 @@
+
 namespace MvcProject99.Models
 {
 	public class ErrorViewModel

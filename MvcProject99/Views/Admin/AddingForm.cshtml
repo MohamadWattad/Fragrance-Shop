@@ -1,0 +1,57 @@
+﻿@model MvcProject99.Models.AddingProducts
+
+<div class="container-fluid px-1 py-5 mx-auto form2" id="adding">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <h3>Adding Form</h3>
+            <p class="blue-text">you can add your product here.</p>
+            <div class="card2">
+                <h5 class="text-center mb-4">Powering world-class companies</h5>
+                <form class="form-card" action="ProductForm" method="post">
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Name<span class="text-danger"> *</span>
+                            </label>
+                            <input type="text" id="" name="PName" value="@Model.PName" placeholder="Fregrance name" onblur="validate(1)"> 
+                      </div>
+                        <div class="form-group col-sm-6 flex-column d-flex"> 
+                            <label class="form-control-label px-3">Intense<span class="text-danger"> *</span></label>
+                            @* <select class="btn btn-light">
+                               <option value="perfume" @Model.Company == "chanel")>Perfume</option>
+                                <option value="oil perfume" name="Intense" value="@Model.Intense">Oil perfume</option>
+                                <option value="eau de perfume" name="Intense" value="@Model.Intense">Eau de perfume</option>
+                                <option value="eau de toilette" name="Intense" value="@Model.Intense">Eau de toilette</option>
+                                <option value="eau fraiche" name="Intense" value="@Model.Intense">Eau fraich</option>
+                            </select> *@
+                            <input type="text" id="" name="Intense" value="@Model.Intense" placeholder="Fregrance name" onblur="validate(1)">
+                        </div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Company<span class="text-danger"> *</span></label>
+                                <div class="form-group col-sm-6 flex-column d-flex">
+                                   @*  <select class="btn btn-light">
+                                        <option value="chanel" name="Company" value="@Model.Company">Chanel</option>
+                                        <option value="dior" name="Company" value="@Model.Company">Dior</option>
+                                        <option value="l'oréal" name="Company" value="@Model.Company">L'Oréal</option>
+                                        <option value="coty" name="Company" value="@Model.Company">Coty</option>
+                                        <option value="gucci" name="Company" value="@Model.Company">Gucci</option>
+                                        <option value="paco rabanne" name="Company" value="@Model.Company">Paco Rabanne</option>
+                                        <option value="versace" name="Company" value="@Model.Company">Versace</option>
+                                        <option value="bvlgari" name="Company" value="@Model.Company">Bvlgari</option>
+                                        <option value="yves saint laurent" name="Company" value="@Model.Company">Yves Saint Laurent</option>
+                                    </select> *@
+                                    <input type="text" id="" name="Company" value="@Model.Company" placeholder="Fregrance name" onblur="validate(1)">
+                                </div>
+                            </div>
+                        <div class="form-group col-sm-6 flex-column d-flex"> 
+                            <label class="form-control-label px-3">Price$<span class="text-danger"> *</span></label> 
+                            <input type="text"  name="Price" value="@Model.Price" placeholder="" onblur="validate(4)">
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="form-group col-lg-6"> <button type="submit" class="btn-block btn-primary">Submit</button> </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
