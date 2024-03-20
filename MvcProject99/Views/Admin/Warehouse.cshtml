@@ -1,31 +1,34 @@
-﻿<h3>Warehouse</h3>
+﻿@model MvcProject99.Models.Warehouse
+<h3>Warehouse</h3>
 <div class="table-responsive table-scroll" data-mdb-perfect-scrollbar="true" style="position: relative;">
     <table class="table table-striped mb-0">
-     <thead style="background-color: #002d72; color:aliceblue">
-        <tr>
-            <th scope="col">Product name</th>
-            <th scope="col">Product company</th>
-            <th scope="col">Product intense</th>
-            <th scope="col">Product price</th>
-            <th scope="col">Product discount</th>
-        </tr>
-     </thead>
-         <tbody>
-             <tr>
-               <td>Blue</td>
-               <td>Chanel</td>
-               <td>Eau de perfume</td>
-               <td>600</td>
-               <td>0%</td>
-             </tr>
+        <thead style="background-color: #002d72; color:aliceblue">
             <tr>
-                <td>Allure</td>
-                <td>Chanel</td>
-                <td>Eau de perfume</td>
-                <td>600</td>
-                <td>10%</td>
+                <th scope="col">Product name</th>
+                <th scope="col">Product company</th>
+                <th scope="col">Product intense</th>
+                <th scope="col">Product price</th>
+                <th scope="col">Product discount</th>
+                <th scope="col">Product amount</th>
             </tr>
+        </thead>
+        <tbody>
+            <!-- Dynamic table rows generated from the model -->
+            @if (Model != null && Model.products != null)
+            {
+                foreach (AddingProducts item in Model.products)
+                {
+                    <tr>
+                        <td>@item.PName</td>
+                        <td>@item.Company</td>
+                        <td>@item.Intense</td>
+                        <td>@item.Price</td>
+                        <td>@item.Discount</td>
+                        <td>@item.Amount</td>
+                    </tr>
+                }
+            }
+           
         </tbody>
     </table>
 </div>
-              

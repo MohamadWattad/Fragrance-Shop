@@ -71,7 +71,7 @@ namespace MvcProject99.Controllers
                 if (user.Email.Equals("Admin@gmail.com", StringComparison.OrdinalIgnoreCase))
                 {
                     // Redirect to admin page
-                    return View("LogInAdmin",user);
+                    return RedirectToAction("Admin", "Admin");
                 }
 
                 using (SqlConnection connection = new SqlConnection(connectionString))

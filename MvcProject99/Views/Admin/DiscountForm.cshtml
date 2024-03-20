@@ -1,4 +1,5 @@
-﻿
+﻿@* @model MvcProject99.Models.AddingProducts *@
+@model MvcProject99.Models.Warehouse
 <div class="container-fluid px-1 py-5 mx-auto form2" id="discount">
     <div class="row d-flex justify-content-center">
         <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
@@ -6,23 +7,23 @@
             <p class="blue-text">you can add discount to product here.</p>
             <div class="card2">
                 <h5 class="text-center mb-4">Powering world-class companies</h5>
-                <form class="form-card" action="" method="post">
+                <form class="form-card" action="Discount" method="post">
                     <div class="row justify-content-between text-left">
                         <div class="form-group col-sm-6 flex-column d-flex">
                             <label class="form-control-label px-3">
                                 Name<span class="text-danger"> *</span>
                             </label>
-                            <input type="text" id="" name="" value="" placeholder="Fregrance name" onblur="validate(1)">
+                            <input type="text" id="" name="product.PName" value="@Model.product.PName" placeholder="Fregrance name" onblur="validate(1)">
                         </div>
 
 
                         <div class="form-group col-sm-6 flex-column d-flex">
                         <label class="form-control-label px-3">Discount%<span class="text-danger"> *</span></label>
-                        <input type="text" name="" value="" placeholder="" onblur="validate(4)">
+                            <input type="text" name="product.Discount" value="@Model.product.Discount" placeholder="" onblur="validate(4)">
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="form-group col-lg-12"> <button type="submit" class="btn-block btn-dark">Add</button> </div>
+                        <div class="form-group col-lg-12"> <button type="submit" class="btn-block btn btn-dark">Add</button> </div>
                     </div>
                 </form>
             </div>
