@@ -58,6 +58,77 @@ namespace MvcProject99.Controllers
                 return View("SignUp", NewUser);
             }
         }
+        public IActionResult SearchPage(Warehouse Wproducts)
+        {
+            Wproducts.searchList = new List<AddingProducts>();
+            Wproducts.realatedList = new List<AddingProducts>();
+            string Comp = "";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // First query to fetch search results
+                string selectQuery = "SELECT * FROM products WHERE PName = @PName";
+                using (SqlCommand selectCommand = new SqlCommand(selectQuery, connection))
+                {
+                    selectCommand.Parameters.AddWithValue("@PName", Wproducts.FGname);
+
+                    using (SqlDataReader reader = selectCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            AddingProducts product = new AddingProducts();
+                            product.PName = reader.GetString(0);
+                            product.Intense = reader.GetString(1);
+                            product.Company = reader.GetString(2);
+                            product.Price = reader.GetInt32(3);
+                            product.Discount = reader.GetInt32(4);
+                            product.Amount = reader.GetInt32(5);
+                            product.ImageURL = reader.GetString(6);
+                            Wproducts.searchList.Add(product);
+                        }
+                    }
+
+                    if (Wproducts.searchList.Count > 0)
+                    {
+                        Comp = Wproducts.searchList[0].Company;
+                    }
+                }
+
+                // Second query to fetch related products
+                if (!string.IsNullOrEmpty(Comp))
+                {
+                    string relatedQuery = "SELECT * FROM products WHERE Company = @Company and PName!=@PName";
+                    using (SqlCommand relatedCommand = new SqlCommand(relatedQuery, connection))
+                    {
+                        relatedCommand.Parameters.AddWithValue("@Company", Comp);
+                        relatedCommand.Parameters.AddWithValue("@PName", Wproducts.FGname);
+
+                        using (SqlDataReader reader = relatedCommand.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                AddingProducts product = new AddingProducts();
+                                product.PName = reader.GetString(0);
+                                product.Intense = reader.GetString(1);
+                                product.Company = reader.GetString(2);
+                                product.Price = reader.GetInt32(3);
+                                product.Discount = reader.GetInt32(4);
+                                product.Amount = reader.GetInt32(5);
+                                product.ImageURL = reader.GetString(6);
+                                Wproducts.realatedList.Add(product);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return View("SearchPage", Wproducts);
+        }
+
+
+
         public IActionResult Login()
         {
             LoginModel user = new LoginModel();
@@ -106,6 +177,7 @@ namespace MvcProject99.Controllers
                 return View("Login", user);
             }
         }
+        
     }
 
 

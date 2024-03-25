@@ -4,8 +4,8 @@ namespace MvcProject99.Models
     public class AddingProducts
     {
         public string PName { get; set; }
-        public string Intense { get; set; }
         public string Company { get; set; }
+        public string Intense { get; set; }
         public int Price { get; set; }
         public int Discount { get; set; }
 

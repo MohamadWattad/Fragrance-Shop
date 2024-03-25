@@ -40,8 +40,8 @@
                 <div style="padding-right: 20px;">
                     <a class="btn btn-outline-dark btn-lg" href=""><i class="fa-solid fa-cart-shopping"></i></a>
                 </div>
-                <form action="" method="" class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <form action="/Form/SearchPage" method="post" class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="FGname" value="@Model.FGname">
                     <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
@@ -58,24 +58,22 @@
         <!-- <div class="w3-container">
             <h3 class="w3-padding-64"><b>Community bank</b></h3>
         </div> -->
+        @{
+            // Filter out duplicate products based on company name
+            var uniqueCompanies = Model.products.Select(p => p.Company).Distinct().ToList();
+        }
+
         <div class="w3-bar-block">
-            <h3 style="text-decoration: underline;">Catog</h3>
-            <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Channel</a>
-            <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Showcase</a>
-            <a href="#Aboutus" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About Us</a>
-            <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact</a>
-            <!-- <a href="Sign-Up.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sign Up</a> -->
-            <!-- <div class="dropdown">
-                <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Sign Up
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="Sign-Up.html">Sign-Up-Admin</a></li>
-                    <li><a class="dropdown-item" href="Sign-Up-Customer.html">Sign-Up-Customer</a></li>
-                    <li><a class="dropdown-item" href="Sign-Up-Service.html">Sign-Up-Service Representative</a></li>
-                </ul>
-            </div> -->
-            <!--- <a href="Log-in.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">LogIn</a>-->
+            <h3 style="text-decoration: underline;">Category</h3>
+            @foreach (string company in uniqueCompanies)
+            {
+                <form action="/" method="post">
+                    <input type="hidden" name="CatgN" value="@company" />
+                    <button type="submit" class="w3-bar-item w3-button w3-hover-white company-link">@company</button>
+                </form>
+            }
+        </div>
+
         </div>
     </nav>
 </div>
@@ -134,26 +132,54 @@
 
     @foreach (AddingProducts item in Model.products)
     {
-        <div class="col-lg-4" style="padding-top: 2%;">
-            <div class="card" style="width: 18rem;">
-                <div style="width: 12rem; padding-left:25%;">
-                    <img src="@item.ImageURL" class="card-img-top" alt="...">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Fregrance: @item.PName</h5>
-                    <p class="card-text">Intense: @item.Intense</p>
-                    <p class="card-text">Company: @item.Company</p>
-                    <p class="card-text" style="@(item.Discount > 0 ? "text-decoration: line-through;" : "")">Original Price: @item.Price</p>
-                    @if (item.Discount > 0)
-                    {
-                        <p class="card-text">Discount: @item.Discount %</p>
-@*                         AddingProducts discountedPrice = item.Price * (1 - (item.Discount / 100));
- *@                        <p class="card-text">After Discount: @(item.Price - (item.Price * item.Discount / 100))</p> 
-@*                          <p class="card-text">Price after Discount: @discountedPrice</p>
- *@                    }
-                    <a href="#" class="btn btn-primary">Add to cart <i class="fa-solid fa-plus"></i></a>
+        if (Model.CatgN == item.Company)
+        {
+            <div class="col-lg-4" style="padding-top: 2%;">
+                <div class="card" style="width: 18rem;">
+                    <div style="width: 12rem; padding-left:25%;">
+                        <img src="@item.ImageURL" class="card-img-top" alt="...">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Fregrance: @item.PName</h5>
+                        <p class="card-text">Intense: @item.Intense</p>
+                        <p class="card-text">Company: @item.Company</p>
+                        <p class="card-text" style="@(item.Discount > 0 ? "text-decoration: line-through;" : "")">Original Price: @item.Price</p>
+                        @if (item.Discount > 0)
+                        {
+                            <p class="card-text">Discount: @item.Discount %</p>
+                            @*                         AddingProducts discountedPrice = item.Price * (1 - (item.Discount / 100));
+                *@                        <p class="card-text">After Discount: @(item.Price - (item.Price * item.Discount / 100))</p>
+                            @*                          <p class="card-text">Price after Discount: @discountedPrice</p>
+                *@                    }
+                        <a href="#" class="btn btn-primary">Add to cart <i class="fa-solid fa-plus"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+       else if(Model.CatgN==null)
+        {
+            <div class="col-lg-4" style="padding-top: 2%;">
+                <div class="card" style="width: 18rem;">
+                    <div style="width: 12rem; padding-left:25%;">
+                        <img src="@item.ImageURL" class="card-img-top" alt="...">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Fregrance: @item.PName</h5>
+                        <p class="card-text">Intense: @item.Intense</p>
+                        <p class="card-text">Company: @item.Company</p>
+                        <p class="card-text" style="@(item.Discount > 0 ? "text-decoration: line-through;" : "")">Original Price: @item.Price</p>
+                        @if (item.Discount > 0)
+                        {
+                            <p class="card-text">Discount: @item.Discount %</p>
+                            @*                         AddingProducts discountedPrice = item.Price * (1 - (item.Discount / 100));
+                *@                        <p class="card-text">After Discount: @(item.Price - (item.Price * item.Discount / 100))</p>
+                            @*                          <p class="card-text">Price after Discount: @discountedPrice</p>
+                *@                    }
+                        <a href="#" class="btn btn-primary">Add to cart <i class="fa-solid fa-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+        }
+
     }
 </div>

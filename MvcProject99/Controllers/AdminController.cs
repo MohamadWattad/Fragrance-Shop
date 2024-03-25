@@ -218,8 +218,8 @@ namespace MvcProject99.Controllers
                     {
                         AddingProducts product = new AddingProducts();
                         product.PName = reader.GetString(0);
-                        product.Company = reader.GetString(1);
-                        product.Intense = reader.GetString(2);
+                        product.Intense = reader.GetString(1);
+                        product.Company = reader.GetString(2);
                         product.Price = reader.GetInt32(3);
                         product.Discount = reader.GetInt32(4);
                         product.Amount = reader.GetInt32(5);

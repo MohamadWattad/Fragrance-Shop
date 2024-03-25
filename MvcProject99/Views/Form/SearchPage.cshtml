@@ -1,0 +1,64 @@
+﻿@model MvcProject99.Models.Warehouse
+<div>
+	@foreach (AddingProducts item in Model.searchList)
+    {
+        
+        
+            <div class="col-lg-4" style="padding-top: 2%;">
+                <div class="card" style="width: 18rem;">
+                    <div style="width: 12rem; padding-left:25%;">
+                        <img src="@item.ImageURL" class="card-img-top" alt="...">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Fregrance: @item.PName</h5>
+                        <p class="card-text">Intense: @item.Intense</p>
+                        <p class="card-text">Company: @item.Company</p>
+                        <p class="card-text" style="@(item.Discount > 0 ? "text-decoration: line-through;" : "")">Original Price: @item.Price</p>
+                        @if (item.Discount > 0)
+                        {
+                            <p class="card-text">Discount: @item.Discount %</p>
+                            @*                         AddingProducts discountedPrice = item.Price * (1 - (item.Discount / 100));
+                *@                        <p class="card-text">After Discount: @(item.Price - (item.Price * item.Discount / 100))</p>
+                            @*                          <p class="card-text">Price after Discount: @discountedPrice</p>
+                *@                    }
+                        <a href="#" class="btn btn-primary">Add to cart <i class="fa-solid fa-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+        
+    }
+
+    <div>
+        <p><h3>related products</h3></p>
+
+        @foreach (AddingProducts item in Model.realatedList)
+        {
+
+
+            <div class="col-lg-4" style="padding-top: 2%;">
+                <div class="card" style="width: 18rem;">
+                    <div style="width: 12rem; padding-left:25%;">
+                        <img src="@item.ImageURL" class="card-img-top" alt="...">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Fregrance: @item.PName</h5>
+                        <p class="card-text">Intense: @item.Intense</p>
+                        <p class="card-text">Company: @item.Company</p>
+                        <p class="card-text" style="@(item.Discount > 0 ? "text-decoration: line-through;" : "")">Original Price: @item.Price</p>
+                        @if (item.Discount > 0)
+                        {
+                            <p class="card-text">Discount: @item.Discount %</p>
+                            @*                         AddingProducts discountedPrice = item.Price * (1 - (item.Discount / 100));
+                    *@                        <p class="card-text">After Discount: @(item.Price - (item.Price * item.Discount / 100))</p>
+                            @*                          <p class="card-text">Price after Discount: @discountedPrice</p>
+                    *@                    }
+                        <a href="#" class="btn btn-primary">Add to cart <i class="fa-solid fa-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+    </div>
+</div>
