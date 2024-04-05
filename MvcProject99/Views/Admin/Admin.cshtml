@@ -1,4 +1,5 @@
 ﻿@* @model MvcProject99.Models.AddingProducts *@
+@using System.Text.Json
 @model MvcProject99.Models.Warehouse
 <link href="~/css/admin.css" rel="stylesheet" />
 <script defer src="https://use.fontawesome.com/releases/v6.2.1/js/all.js"></script>
@@ -15,28 +16,50 @@
                     <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
                         <div class="d-flex flex-column">
                             <span class="articles">Adding</span>
-                            <button id="show-adding-btn" class="btn btn-outline-success"> <i class="fa-solid fa-plus"></i></button>
+                            <button onclick="toggleDiv('adding')" class="btn btn-outline-success"> <i class="fa-solid fa-plus"></i></button>
                         </div>
                         <div class="d-flex flex-column number1">
                             <span class="articles">Deleting</span>
-                            <button id="show-deleting-btn" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                            <button onclick="toggleDiv('deleting')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                         </div>
                         <div class="d-flex flex-column number1">
                             <form action="GetWarehouse" method="post">
-                            <span class="articles">Warehouse</span>
-                            <button id="show-warehouse-btn" class="btn btn-warning"><i class="fa-solid fa-warehouse"></i></button>
+                                <span class="articles">Warehouse</span>
+                                <button onclick="toggleDiv('warehouse')" class="btn btn-warning"><i class="fa-solid fa-warehouse"></i></button>
                             </form>
                         </div>
                         <div class="d-flex flex-column number1">
                             <span class="articles">Discount</span>
-                            <button id="show-discount-btn"class="btn btn-dark"><i class="fa-solid fa-percent"></i></button>
+                            <button onclick="toggleDiv('discount')" class="btn btn-dark"><i class="fa-solid fa-percent"></i></button>
                         </div>
+                        <div class="d-flex flex-column number1">
+                            <span class="articles">stock</span>
+                            <button onclick="toggleDiv('edit')" class="btn btn-info"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+
                     </div>
                 </div>
+
             </div>
+            @if (TempData["messages"] != null)
+            {
+                var serializedMessages = TempData["messages"].ToString();
+                var storedMessages = JsonSerializer.Deserialize<Messages>(serializedMessages);
+
+                <div class="d-flex flex-column">
+                    <ul class="list-group">
+                        @foreach (string item in storedMessages.msgList)
+                        {
+                            <li class="list-group-item">@item</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+
         </div>
     </div>
-    
+
     <div id="adding" style="display: none;">
         <!-- This is where the partial view will be loaded -->
         @Html.Partial("AddingForm")
@@ -49,15 +72,32 @@
     <div id="warehouse">
         <!-- This is where the partial view will be loaded -->
         @Html.Partial("Warehouse")
-       
+
 
     </div>
     <div id="discount" style="display: none;">
         <!-- This is where the partial view will be loaded -->
         @Html.Partial("DiscountForm")
     </div>
+    <div id="edit" style="display: block;">
+        <!-- This is where the partial view will be loaded -->
+        @Html.Partial("EditingForm")
+    </div>
 
 </div>
+
+<script>
+    // JavaScript function to toggle the display of divs
+    function toggleDiv(divId) {
+        var div = document.getElementById(divId);
+        if (div.style.display === "none") {
+            div.style.display = "block";
+        } else {
+            div.style.display = "none";
+        }
+    }
+</script>
+
 
 <script>
     document.getElementById("show-adding-btn").addEventListener("click", function () {

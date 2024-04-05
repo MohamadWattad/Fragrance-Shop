@@ -8,7 +8,7 @@ namespace MvcProject99.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "please enter your password")]
-        [RegularExpression("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,}$", ErrorMessage = "Invailed")]
+        //[RegularExpression("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,}$", ErrorMessage = "Invailed")]
         public string Password { get; set; }
     }
 }

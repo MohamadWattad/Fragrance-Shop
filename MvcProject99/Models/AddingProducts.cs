@@ -13,8 +13,10 @@ namespace MvcProject99.Models
 
         public string ImageURL { get; set; }
 
+        public int Counter { get; set; }   
+
         //public int NewPrice {  get; set; }
 
-        public List<AddingProducts> products { get; set; }
+        //public List<AddingProducts> products { get; set; }
     }
 }

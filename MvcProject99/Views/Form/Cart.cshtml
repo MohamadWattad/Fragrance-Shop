@@ -1,0 +1,274 @@
+﻿@using System.Text.Json
+
+
+<div>
+    <section class="h-100" style="background-color: #eee;">
+        <div class="container h-100 py-5">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-10">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+                        <div>
+                            <p class="mb-0">
+                                <span class="text-muted">Sort by:</span> <a href="#!" class="text-body">
+                                    price <i class="fas fa-angle-down mt-1"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    @{
+                        int TotalPrice = 0;
+                        List<(string Name, int Quantity)> items = new List<(string Name, int Quantity)>();
+                    } // Moved the declaration of TotalPrice here
+                    @if (TempData["StoredWarehouse"] != null)
+                    {
+                        var serializedWarehouse = TempData["StoredWarehouse"].ToString();
+                        var storedWarehouse = JsonSerializer.Deserialize<Warehouse>(serializedWarehouse);
+                       
+                        foreach (var item in storedWarehouse.purchased)
+                        {
+                            int maxAmount = Convert.ToInt32(item.Amount); // Convert the string to an integer
+                            
+                       
+
+                    // Set the value of 'amount' to the quantity for the current item
+                         
+
+                            <div class="card rounded-3 mb-4">
+                                <div class="card-body p-4">
+                                    <div class="row d-flex justify-content-between align-items-center">
+                                        <div class="col-md-2 col-lg-2 col-xl-2">
+                                            <img src="@item.ImageURL" class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                            <p class="lead fw-normal mb-2">@item.PName</p>
+                                            <p><span class="text-muted">Intense: </span>@item.Intense <span class="text-muted">Company: </span>@item.Company</p>
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                            <button class="btn btn-link px-2" onclick="decrementQuantity('@item.PName')">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input id="quantity_@item.PName" min="0" name="amount" value="0" max="@maxAmount" type="number" class="form-control form-control-sm" onchange="updateTotalPrice()">
+
+                                            <button class="btn btn-link px-2" onclick="incrementQuantity('@item.PName', @maxAmount)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                            @if (item.Discount > 0)
+                                            {
+                                                <h5 class="mb-0" id="price_@item.PName" style="text-decoration:line-through;">$@item.Price</h5>
+                                                <p class="card-text">Discount: @item.Discount %</p>
+                                                <p class="card-text">After Discount: @(item.Price - (item.Price * item.Discount / 100))</p>
+                                            }
+                                            else
+                                            {
+                                                <h5 class="mb-0" id="price_@item.PName">$@item.Price</h5>
+                                            }
+                                        </div>
+                                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                            <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        }
+
+                        <div>
+                            <p><h3 id="totalPrice">Total Price: $@TotalPrice</h3></p>
+                        </div>
+                    }
+
+
+                    else
+                    {
+                        <p>Your cart is empty.</p>
+
+
+                    }
+
+                    <div class="card mb-4">
+                        <div class="card-body p-4 d-flex flex-row">
+                            <div class="form-outline flex-fill">
+                                <input type="text" id="discountCode" class="form-control form-control-lg" placeholder="Discount code" />
+                            </div>
+                            <button type="button" class="btn btn-outline-warning btn-lg ms-3" onclick="applyDiscount()">Apply</button>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-warning btn-block btn-lg" onclick="showPayment()">Proceed to Pay</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="container py-5" style="display:none;" id="paymentDiv">
+    <!-- For demo purpose -->
+    <div class="row mb-4">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-6">Payment Forms</h1>
+        </div>
+    </div> <!-- End -->
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="bg-white shadow-sm pt-4 pl-2 pr-2 pb-2">
+                        <!-- Credit card form tabs -->
+                        <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
+                            <li class="nav-item"> <a data-toggle="pill" href="#credit-card" class="nav-link active "> <i class="fas fa-credit-card mr-2"></i> Credit Card </a> </li>
+                            <li class="nav-item"> <a data-toggle="pill" href="#paypal" class="nav-link "> <i class="fab fa-paypal mr-2"></i> Paypal </a> </li>
+                        </ul>
+                    </div> <!-- End -->
+                    <!-- Credit card form content -->
+                    <div class="tab-content">
+                        <!-- credit card info-->
+                        <div id="credit-card" class="tab-pane fade show active pt-3">
+                            <form  action="PaymentForm" method="post">
+                                <div class="form-group">
+                                   <label for="username">
+                                        <h6>Card Owner</h6>
+                                    </label> <input type="text" name="username" placeholder="Card Owner Name" required class="form-control ">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cardNumber">
+                                        <h6>Card number</h6>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="text" name="cardNumber" placeholder="Valid card number" class="form-control " required>
+                                        <div class="input-group-append"> <span class="input-group-text text-muted"> <i class="fab fa-cc-visa mx-1"></i> <i class="fab fa-cc-mastercard mx-1"></i> <i class="fab fa-cc-amex mx-1"></i> </span> </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <label>
+                                                <span class="hidden-xs">
+                                                    <h6>Expiration Date</h6>
+                                                </span>
+                                            </label>
+                                            <div class="input-group"> <input type="number" placeholder="MM" name="" class="form-control" required> <input type="number" placeholder="YY" name="" class="form-control" required> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group mb-4">
+                                            <label data-toggle="tooltip" title="Three digit CV code on the back of your card">
+                                                <h6>CVV <i class="fa fa-question-circle d-inline"></i></h6>
+                                            </label> <input type="text" required class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="items" name="items" value="" />
+                                <div class="card-footer">
+                                    <button type="submit" class="subscribe btn btn-primary btn-block shadow-sm">Confirm Payment</button>
+                                </div>
+                            </form>
+                        </div>
+                           
+                    </div> <!-- End -->
+                    <!-- Paypal info -->
+                    <div id="paypal" class="tab-pane fade pt-3">
+                        <h6 class="pb-2">Select your paypal account type</h6>
+                        <div class="form-group "> <label class="radio-inline"> <input type="radio" name="optradio" checked> Domestic </label> <label class="radio-inline"> <input type="radio" name="optradio" class="ml-5">International </label></div>
+                        <p> <button type="button" class="btn btn-primary "><i class="fab fa-paypal mr-2"></i> Log into my Paypal</button> </p>
+                        <p class="text-muted"> Note: After clicking on the button, you will be directed to a secure gateway for payment. After completing the payment process, you will be redirected back to the website to view details of your order. </p>
+                    </div> <!-- End -->
+                    <!-- bank transfer info -->
+                    <!-- End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var itemsList = []; // Initialize itemsList outside the function to maintain its state
+
+        function updateTotalPrice() {
+            var totalPrice = 0;
+            itemsList = []; // Clear the itemsList array
+            var inputs = document.querySelectorAll('input[name="amount"]');
+            inputs.forEach(function (input) {
+                var quantity = parseInt(input.value);
+                var pName = input.id.split('_')[1];
+                var priceElement = document.getElementById('price_' + pName);
+                var price = parseFloat(priceElement.innerText.split('$')[1]);
+                var discountedPrice = price;
+                var discountElement = priceElement.nextElementSibling;
+                var discount = 0;
+                if (discountElement && discountElement.classList.contains('card-text')) {
+                    discount = parseInt(discountElement.innerText.split(':')[1].trim().split('%')[0]);
+                    discountedPrice = price - (price * discount / 100);
+                }
+                totalPrice += quantity * discountedPrice;
+
+                // Push quantity and item name to the itemsList array
+                itemsList.push({ Quantity: quantity, PName: pName });
+            });
+            document.getElementById('totalPrice').innerText = "Total Price: $" + totalPrice.toFixed(2);
+
+            // Convert itemsList array to JSON string
+            var itemsJson = JSON.stringify(itemsList);
+
+            // Set the value of the hidden input named 'items' with the JSON string
+            document.getElementById('items').value = itemsJson;
+        }
+
+        function incrementQuantity(pName, maxAmount) {
+            var input = document.getElementById('quantity_' + pName);
+            var currentValue = parseInt(input.value);
+            if (currentValue < maxAmount) {
+                input.value = currentValue + 1;
+                updateTotalPrice();
+            }
+        }
+
+        function decrementQuantity(pName) {
+            var input = document.getElementById('quantity_' + pName);
+            var currentValue = parseInt(input.value);
+            if (currentValue > 0) {
+                input.value = currentValue - 1;
+                updateTotalPrice();
+            }
+        }
+
+        function showPayment() {
+            var paymentDiv = document.getElementById('paymentDiv');
+            if (paymentDiv.style.display === 'none') {
+                paymentDiv.style.display = 'block';
+            } else {
+                paymentDiv.style.display = 'none';
+            }
+        }
+        var discountApplied = false;
+
+        function applyDiscount() {
+            if (discountApplied) {
+                alert("Discount has already been applied.");
+                return;
+            }
+
+            var discountCode = document.getElementById('discountCode').value;
+            var userName = "@(TempData["userName"])"; // Get the user name from TempData
+            var totalPriceElement = document.getElementById('totalPrice');
+            var totalPriceText = totalPriceElement.innerText;
+            var totalPrice = parseFloat(totalPriceText.split('$')[1]); // Extract total price from the text
+
+            if (discountCode === userName) {
+                // Apply 10% discount
+                var discount = totalPrice * 0.1;
+                var discountedPrice = totalPrice - discount;
+                totalPriceElement.innerText = "Total Price: $" + discountedPrice.toFixed(2);
+                discountApplied = true; // Set the flag to true indicating that the discount has been applied
+            } else {
+                alert("Invalid discount code.");
+            }
+        }
+    </script>

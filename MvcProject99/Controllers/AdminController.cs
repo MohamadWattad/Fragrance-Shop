@@ -44,6 +44,7 @@ namespace MvcProject99.Controllers
                     selectCommand.Parameters.AddWithValue("@PName", Ndiscount.product.PName);
                     object currentDiscount = selectCommand.ExecuteScalar();
 
+
                     // Check if the currentDiscount is not null before updating
                     if (currentDiscount != null)
                     {
@@ -115,7 +116,56 @@ namespace MvcProject99.Controllers
                 }
             }
         }
+        public IActionResult EditingForm()
+        {
+            Warehouse warehouse = new Warehouse();
+            warehouse.product = new AddingProducts();
+            warehouse.products = new List<AddingProducts>();
+            return View("EditingForm", warehouse.product);
+        }
+         public IActionResult AfterEditing(Warehouse WProduct)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string selectQuery = "SELECT Amount FROM Products WHERE PName=@PName";
+                using (SqlCommand selectCommand = new SqlCommand(selectQuery, connection))
+                {
+                    selectCommand.Parameters.AddWithValue("@PName", WProduct.product.PName);
+                    object currentAmount = selectCommand.ExecuteScalar();
 
+
+                    // Check if the currentDiscount is not null before updating
+                    if (currentAmount != null)
+                    {
+                        // Update the discount in the database
+                        string updateQuery = "UPDATE Products SET Amount=@Amount WHERE PName=@PName";
+                        using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
+                        {
+                            updateCommand.Parameters.AddWithValue("@PName", WProduct.product.PName);
+                            updateCommand.Parameters.AddWithValue("@Amount", WProduct.product.Amount);
+                            int rowsAffected = updateCommand.ExecuteNonQuery();
+
+                            if (rowsAffected > 0)
+                            {
+                                // Return success view or redirect
+                                return View("Admin", WProduct);
+                            }
+                            else
+                            {
+                                ViewBag.ErrorMessage = "No rows updated. Product name not found.";
+                                return View("Admin", WProduct);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "Product not found.";
+                        return View("Admin", WProduct);
+                    }
+                }
+            }
+        }
         public IActionResult ProductForm(Warehouse Wproduct)
         {
             try
@@ -157,7 +207,7 @@ namespace MvcProject99.Controllers
                         else
                         {
                             // If the combination doesn't exist, insert a new row
-                            string insertQuery = "INSERT INTO Products VALUES (@PName, @Intense, @Company, @Price, @Discount, @Amount,@ImageURL)";
+                            string insertQuery = "INSERT INTO Products VALUES (@PName, @Intense, @Company, @Price, @Discount, @Amount,@ImageURL,@Counter)";
                             using (SqlCommand insertCommand = new SqlCommand(insertQuery, connection))
                             {
                                 insertCommand.Parameters.AddWithValue("@PName", Wproduct.product.PName);
@@ -165,8 +215,9 @@ namespace MvcProject99.Controllers
                                 insertCommand.Parameters.AddWithValue("@Company", Wproduct.product.Company);
                                 insertCommand.Parameters.AddWithValue("@Price", Wproduct.product.Price);
                                 insertCommand.Parameters.AddWithValue("@Discount", Wproduct.product.Discount);
-                                insertCommand.Parameters.AddWithValue("@Amount", 1); // Set Amount to 1 for new entry
+                                insertCommand.Parameters.AddWithValue("@Amount", Wproduct.product.Amount); // Set Amount to 1 for new entry
                                 insertCommand.Parameters.AddWithValue("@ImageURL",Wproduct.product.ImageURL);
+                                insertCommand.Parameters.AddWithValue("@Counter",0);
                                 int rowsAffected = insertCommand.ExecuteNonQuery();
 
                                 if (rowsAffected > 0)
