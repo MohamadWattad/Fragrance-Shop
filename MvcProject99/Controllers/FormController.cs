@@ -262,7 +262,7 @@ namespace MvcProject99.Controllers
                 foreach (Item fr in itemsList)
                 {
                     string query = "SELECT Amount FROM Products WHERE PName = @PName";
-                    string updateQuery = "UPDATE Products SET Amount = @Amount, Counter = Counter + (@PrevAmount - @Amount) WHERE PName = @PName";
+                    string updateQuery = "UPDATE Products SET Amount = @Amount,Counter=Counter+Amount WHERE PName = @PName";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@PName", fr.PName);
@@ -275,7 +275,6 @@ namespace MvcProject99.Controllers
                             using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
                             {
                                 updateCommand.Parameters.AddWithValue("@Amount", newAmount);
-                                updateCommand.Parameters.AddWithValue("@PrevAmount", currentAmount);
                                 updateCommand.Parameters.AddWithValue("@PName", fr.PName);
 
                                 updateCommand.ExecuteNonQuery();
@@ -283,15 +282,22 @@ namespace MvcProject99.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError(string.Empty, "Insufficient amount.");
+                            ModelState.AddModelError(string.Empty, "There is no amount.");
                             return RedirectToAction("Index", "HomePage");
                         }
-                    }
-                }
-            }
-            return RedirectToAction("Index", "HomePage");
-        }
 
+                    }
+
+
+
+
+                }
+
+            }
+            TempData["SuccessMessage"] = "Payment successful.";
+            return RedirectToAction("Index", "HomePage");
+
+        }
         public ActionResult Request(string message)
         {
             Messages storedMessages = TempData.ContainsKey("messages") ?
