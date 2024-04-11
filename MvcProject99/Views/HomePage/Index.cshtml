@@ -86,7 +86,7 @@
                     <a class="btn btn-outline-dark btn-lg" href="/Form/Cart"><i class="fa-solid fa-cart-shopping"></i></a>
                 </div>
                 <form action="/Form/SearchPage" method="post" class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="FGname" value="@Model.FGname">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="FGname" value="@Model.FGname" required>
                     <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
@@ -184,8 +184,11 @@
                 *@                        <p class="card-text">After Discount:@(item.Price - (item.Price * item.Discount / 100))$</p>
                             @*                          <p class="card-text">Price after Discount: @discountedPrice</p>
                 *@                    }
-                        <p class="card-text">Amount: @item.Amount</p>
-                        @if (item.Amount == 0)
+                        @if (item.Amount >= 0)
+                        {
+                            <p class="card-text">Amount: @item.Amount</p>
+                        }
+                        @if (item.Amount <= 0)
                         {
                             <p class="card-text" style="color:red">
                                 out of stock
@@ -232,8 +235,11 @@
                 *@                        <p class="card-text">After Discount:@(item.Price - (item.Price * item.Discount / 100))$</p>
                             @*                          <p class="card-text">Price after Discount: @discountedPrice</p>
                 *@                    }
-                        <p class="card-text">Amount: @item.Amount</p>
-                        @if (item.Amount == 0)
+                        @if (item.Amount >= 0)
+                        {
+                            <p class="card-text">Amount: @item.Amount</p>
+                        }
+                        @if (item.Amount <= 0)
                         {
                             <p class="card-text" style="color:red">
                                 out of stock
@@ -280,8 +286,11 @@
                 *@                        <p class="card-text">After Discount:@(item.Price - (item.Price * item.Discount / 100))$</p>
                             @*                          <p class="card-text">Price after Discount: @discountedPrice</p>
                 *@                    }
-                        <p class="card-text">Amount: @item.Amount</p>
-                        @if (item.Amount == 0)
+                        @if (item.Amount >= 0)
+                        {
+                            <p class="card-text">Amount: @item.Amount</p>
+                        }
+                        @if (item.Amount <= 0)
                         {
                             <p class="card-text" style="color:red">
                                 out of stock
@@ -332,8 +341,11 @@
                 *@                        <p class="card-text">After Discount:@(item.Price - (item.Price * item.Discount / 100))$</p>
                             @*                          <p class="card-text">Price after Discount: @discountedPrice</p>
                 *@                    }
-                        <p class="card-text">Amount: @item.Amount</p>
-                        @if (item.Amount == 0)
+                        @if (item.Amount >= 0)
+                        {
+                            <p class="card-text">Amount: @item.Amount</p>
+                        }
+                        @if (item.Amount <= 0)
                         {
                             <p class="card-text" style="color:red">
                                 out of stock
@@ -383,8 +395,11 @@
                 *@                        <p class="card-text">After Discount:@(item.Price - (item.Price * item.Discount / 100))$</p>
                             @*                          <p class="card-text">Price after Discount: @discountedPrice</p>
                 *@                    }
-                        <p class="card-text">Amount: @item.Amount</p>
-                        @if (item.Amount == 0)
+                        @if (item.Amount >= 0)
+                        {
+                            <p class="card-text">Amount: @item.Amount</p>
+                        }
+                        @if (item.Amount <= 0)
                         {
                             <p class="card-text" style="color:red">
                                 out of stock

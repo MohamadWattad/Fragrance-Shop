@@ -171,6 +171,19 @@ namespace MvcProject99.Controllers
                         return View("Login", user);
                     }
                 }
+                else if (user.Email.Equals("Admin3@Admin.com", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Redirect to admin page
+                    if (user.Password.Equals("AB2001", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return RedirectToAction("Admin", "Admin");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login credentials.");
+                        return View("Login", user);
+                    }
+                }
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
